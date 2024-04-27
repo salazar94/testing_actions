@@ -10,7 +10,7 @@ jobs:
       NODE_OPTIONS: "--max-old-space-size=4096"
     runs-on: windows-latest
     outputs:
-      tag: ${{steps.tag.outputs.sha}}
+      tag: 23
 
     steps:
       - name: GitHub checkout
@@ -35,6 +35,16 @@ jobs:
         with:
           maven-version: 3.6.3
 
+      - name: Check if can run a project
+        run: node -e "console.log('esta es la primera prube')"
+          
+      - name: make a dir in root directory
+        run: ls
+
+      - name: execute field
+        run: cd.. && ls
+
+        
       - name: maven-settings-xml-action
         uses: whelk-io/maven-settings-xml-action@v20
         with:
