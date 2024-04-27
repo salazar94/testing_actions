@@ -1,0 +1,66 @@
+name: Ejecucion CD-DEV
+
+on:
+  push:
+    branches: ["feature/ci-cd"]
+
+jobs:
+  build:
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+    runs-on: windows-latest
+    outputs:
+      tag: ${{steps.tag.outputs.sha}}
+
+    steps:
+      - name: GitHub checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "14.17.1"
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@12.2.16
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: "8"
+          distribution: "temurin"
+
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.6.3
+
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          repositories: >
+            [
+              {
+                "id": "my-nexus",
+                "name": "My New Nexus Oxxo",
+                "url": "http://20.118.83.132:8081/repository/maven-public/"
+              },
+              {
+                "id": "maven.scijava.org",
+                "name": "maven.scijava.org",
+                "url": "https://maven.scijava.org/content/repositories/public/"
+              },
+              {
+                "id": "EclipseLink",
+                "name": "EclipseLink",
+                "url": "http://download.eclipse.org/rt/eclipselink/maven.repo"
+              }
+            ]        
+          output_file: C:\hostedtoolcache\windows\.m2\settings.xml
+
+      - name: Build with Maven
+        run: |
+          pwd
+          ls
+          cd Codigo
+          mvn clean package -Pdev  -DskipTests
