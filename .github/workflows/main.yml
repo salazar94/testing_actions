@@ -32,7 +32,7 @@ jobs:
 
           
       - name: Check if can run a project
-        run: node -e "console.log('esta es la primera prube')"
+        run: node -e "console.log(v8.getHeapStatistics().heap_size_limit/(1024*1024))"
           
       - name: make a dir in root directory
         run: ls
@@ -40,35 +40,8 @@ jobs:
       - name: execute field
         run: cd.. && ls
 
-      - name: Set up Maven
-        uses: stCarolas/setup-maven@v4.5
-        with:
-          maven-version: 3.6.3
 
 
-
-      - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v20
-        with:
-          repositories: >
-            [
-              {
-                "id": "my-nexus",
-                "name": "My New Nexus Oxxo",
-                "url": "http://20.118.83.132:8081/repository/maven-public/"
-              },
-              {
-                "id": "maven.scijava.org",
-                "name": "maven.scijava.org",
-                "url": "https://maven.scijava.org/content/repositories/public/"
-              },
-              {
-                "id": "EclipseLink",
-                "name": "EclipseLink",
-                "url": "http://download.eclipse.org/rt/eclipselink/maven.repo"
-              }
-            ]        
-          output_file: C:\hostedtoolcache\windows\.m2\settings.xml
 
       - name: Build with Maven
         run: |
