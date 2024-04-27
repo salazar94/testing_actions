@@ -30,11 +30,7 @@ jobs:
           java-version: "8"
           distribution: "temurin"
 
-      - name: Set up Maven
-        uses: stCarolas/setup-maven@v4.5
-        with:
-          maven-version: 3.6.3
-
+          
       - name: Check if can run a project
         run: node -e "console.log('esta es la primera prube')"
           
@@ -44,7 +40,13 @@ jobs:
       - name: execute field
         run: cd.. && ls
 
-        
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.6.3
+
+
+
       - name: maven-settings-xml-action
         uses: whelk-io/maven-settings-xml-action@v20
         with:
