@@ -32,7 +32,7 @@ jobs:
           distribution: "temurin"
 
       - name: Set NODE_OPTIONS to increase max-old-space-size
-        run: echo NODE_OPTIONS=--max-old-space-size=4076 >> $GITHUB_ENV
+        run: echo NODE_OPTIONS=--max-old-space-size=8076 >> $GITHUB_ENV
 
 
       - name: Check if can run a project
